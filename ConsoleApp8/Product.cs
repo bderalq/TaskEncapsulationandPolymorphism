@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Numerics;
 using System.Reflection.Metadata;
@@ -22,6 +23,7 @@ namespace ConsoleApp8
         public double Quantity { get; set; }
 
         public double Total { get; set; }
+        public bool Stock { get; set; }
         public void GetName(String name)
         {
             Console.WriteLine("Name of Product is = " + name);
@@ -33,16 +35,15 @@ namespace ConsoleApp8
         }
         public void SetQuantity(double quantity, string name, double price, double total)
         {
-            total = price * quantity;
-            total = Total;
+            Total = price * quantity;
         }
 
         // Bonus : List to store multiple prducts 
         List<Product> products = new List<Product>();
 
-        public void AddProducts(string name, double quantity, double price, double total)
+        public void AddProducts(string name, double quantity, double price, double total, bool stock)
         {
-            products.Add(new Product { Quantity = quantity, Name = name, Price = price, Total = total });
+            products.Add(new Product { Quantity = quantity, Name = name, Price = price, Total = total, Stock = stock });
         }
 
         public void GetProducts()
@@ -50,8 +51,26 @@ namespace ConsoleApp8
             foreach (Product product in products)
             {
 
-                Console.WriteLine("Product name is : " + product.Name + " Product price : " + product.Price + " Quantity is : " + product.Quantity + " Total  is = " + product.Total);
+                Console.WriteLine("Product name is : " + product.Name + "   Product price : " + product.Price + "   Quantity is : " + product.Quantity + "  Total  is : " + product.Total + "   Product In stock = " + product.Stock);
             }
+        }
+        public void GetStock()
+        {
+            int instock = 0;
+            int outofstock = 0;
+            foreach (Product product in products)
+            {
+                if (product.Stock == true)
+                {
+                    instock++;
+                }
+                else if (product.Stock == false) {
+                    {
+                        outofstock++;
+                    }
+                }
+            }
+            Console.WriteLine($"Products in stock = {instock} " + $"Products out of stock = {outofstock}");
         }
     }
 }
